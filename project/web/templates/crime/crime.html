@@ -1,0 +1,15 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h1><a href="{% url 'crimes' %}">Crime</a>: {{ crime.name }}</h1>
+
+{% if user|has_group:"can_edit" %}
+<small><a href="/edit_crime/{{ crime.pk }}">Edit</a></small>
+<small><a href="/delete_crime/{{ crime.pk }}">Delete</a></small>
+{% endif %}
+<hr/>
+
+<p>{{ crime.description }}</p>
+
+{% endblock %}

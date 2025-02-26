@@ -1,0 +1,24 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h2>Case: <a href="{{ incident.case.get_absolute_url }}">{{ incident.case.name }}</a></h2>
+<h1>Incident: {{ incident.name }}</h1>
+<small><a href="/edit_incident/{{ incident.pk }}">Edit</a></small>
+<small><a href="/delete_incident/{{ incident.pk }}">Delete</a></small>
+<hr/>
+
+<h2>Description:</h2>
+<p>{{ incident.description }}</p>
+
+<h2>People of interest:</h2>
+<ul>
+	{% for person_of_interest in incident.people_of_interest.all %}
+	<li>
+		<a href="{{ person_of_interest.character.get_absolute_url }}">{{ person_of_interest.character.name }}</a>
+		({{ person_of_interest.reason }}{% if user|has_group:"can_edit" %}, <a href="/edit_interest/{{ person_of_interest.pk }}">Edit</a>{% endif %})
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

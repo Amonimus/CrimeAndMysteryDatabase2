@@ -1,0 +1,28 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<div class="center">
+	<h1>Log-in</h1>
+	{% if user.is_authenticated %}
+	You are already logged in.
+	{% else %}
+	{{ form.non_field_errors }}
+	<form method="post" id="login-form">
+		{% csrf_token %}
+		<div class="input-group">
+			<input type="text" name="username" autocomplete="on" placeholder="Username" required>
+		</div>
+		<div class="input-group">
+			<input type="password" name="password" autocomplete="on" placeholder="Password" required>
+			<span class="toggle-password">👁</span>
+		</div>
+		<p><input type="submit" value="Login"></p>
+	</form>
+</div>
+{% endif %}
+
+<script>
+	include("toggle_password");
+</script>
+{% endblock %}

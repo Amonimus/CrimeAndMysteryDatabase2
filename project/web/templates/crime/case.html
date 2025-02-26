@@ -1,0 +1,62 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h2>Work: <a href="{{ case.work.get_absolute_url }}">{{ case.work.title }}</a></h2>
+<h1>Case: {{ case.name }}</h1>
+{% if user|has_group:"can_edit" %}
+<small><a href="/edit_case/{{ case.pk }}">Edit</a></small>
+{% endif %}
+<hr/>
+
+<h2>Initial Situation:</h2>
+<p>{{ case.description }}</p>
+
+<h2>People of interest:</h2>
+<ul>
+	{% for person_of_interest in case.people_of_interest %}
+	<li><a href="{{ person_of_interest.get_absolute_url }}">{{ person_of_interest.name }}</a></li>
+	{% endfor %}
+</ul>
+
+<h2>Incidents:</h2>
+
+{% for incident in case.incidents.all %}
+<table class="incident">
+	<tr>
+		<th colspan="2">
+			<a href="{{ incident.get_absolute_url }}">{{ incident.name }}</a>
+		</th>
+	</tr>
+	<tr>
+		<td rowspan="2">{% if incident.image %}{{incident.image}}{% else %}No Image{% endif %}</td>
+		<td><a href="{{ incident.crime.get_absolute_url }}">{{ incident.crime.name }}</a></td>
+	</tr>
+	<tr>
+		<td>{{ incident.description }}</td>
+	</tr>
+</table>
+{% endfor %}
+
+{% if user|has_group:"can_edit" %}
+<a href="{% url 'add_incident' case.pk %}">Add</a>
+{% endif %}
+
+<h2>Clues:</h2>
+<ul>
+	{% for clue in case.clues.all %}
+	<li><a href="{{ clue.get_absolute_url }}">{{ clue.name }}</a></li>
+	{% endfor %}
+	{% if user|has_group:"can_edit" %}
+	<li><a href="{% url 'add_clue' case.pk %}">Add</a></li>
+	{% endif %}
+</ul>
+
+{% if case.solved %}
+<h2>Resolution:</h2>
+<p>{{ case.resolution }}</p>
+{% else %}
+<h2>The case is unresolved.</h2>
+{% endif %}
+
+{% endblock %}

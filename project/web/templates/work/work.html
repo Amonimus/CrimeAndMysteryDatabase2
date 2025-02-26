@@ -1,0 +1,39 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h1><a href="{% url 'works' %}">Work</a>: {{ work.title }}</h1>
+{% if work.author %}<b>by {{ work.author }}</b> <br/>{% endif %}
+{% if work.release_date %}<b>released {{ work.release_date }} <br/></b>{% endif %}
+
+{% if user|has_group:"can_edit" %}
+<small><a href="/edit_work/{{ work.pk }}">Edit</a></small>
+<small><a href="/delete_work/{{ work.pk }}">Delete</a></small>
+{% endif %}
+<hr/>
+
+{% if work.description %}{{ work.description }}{% endif %}
+
+<h2>Characters:</h2>
+
+<ul>
+	{% for character in work.characters.all %}
+	<li><a href="{{ character.get_absolute_url }}">{{ character.name }}</a></li>
+	{% endfor %}
+	{% if user|has_group:"can_edit" %}
+	<li><a href="{% url 'add_character' work.pk %}">Add</a></li>
+	{% endif %}
+</ul>
+
+<h2>Cases:</h2>
+
+<ul>
+	{% for case in work.cases.all %}
+	<li><a href="{{ case.get_absolute_url }}">{{ case.name }}</a></li>
+	{% endfor %}
+	{% if user|has_group:"can_edit" %}
+	<li><a href="{% url 'add_case' work.pk %}">Add</a></li>
+	{% endif %}
+</ul>
+
+{% endblock %}

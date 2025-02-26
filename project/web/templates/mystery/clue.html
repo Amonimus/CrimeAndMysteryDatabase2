@@ -1,0 +1,14 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h2>Case: <a href="{{ clue.case.get_absolute_url }}">{{ clue.case.name }}</a></h2>
+<h1>Clue: {{ clue.name }}</h1>
+<small><a href="/edit_clue/{{ clue.pk }}">Edit</a></small>
+<small><a href="/delete_clue/{{ clue.pk }}">Delete</a></small>
+<hr/>
+
+<h2>Description:</h2>
+<p>{{ clue.description }}</p>
+
+{% endblock %}

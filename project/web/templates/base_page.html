@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title%}Crime&Mystery Database{% endblock %}</title>
+	<link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<script src="{% static 'modules/jquery-3.7.1.js' %}"></script>
+	<script src="{% static 'js/scripts.js' %}"></script>
+</head>
+<body>
+
+<div id="page">
+	<div id="sidebar">
+		<h3><a href="/">C&M DB</a></h3>
+		<hr/>
+		<span id="current-time"></span>
+		<hr/>
+		{% if user.is_authenticated %}
+		{{ user.username }}
+		<ul>
+			<li><a href="/logout">Logout</a></li>
+			<li><a href="/toggle_edit">Toggle edit</a></li>
+		</ul>
+		{% else %}
+		<ul>
+			<li><a href="/register">Register</a></li>
+			<li><a href="/login">Login</a></li>
+		</ul>
+		{% endif %}
+		<hr/>
+		<ul>
+			{% if user.is_superuser %}
+			<li><a href="/admin">Admin</a></li>
+			{% endif %}
+			<li><a href="/works">Works</a></li>
+			<li><a href="/crimes">Crimes</a></li>
+		</ul>
+	</div>
+
+	<div id="content">
+		{% block content%} Body {% endblock %}
+	</div>
+</div>
+</body>
+
+</html>

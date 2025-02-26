@@ -1,0 +1,9 @@
+<form method="post">
+	{{ form.non_field_errors }}
+	{% csrf_token %}
+	{% for field in form %}
+		{{ field.label_tag }}{% if field.field.required %}*{% endif %} <br/>
+		{{ field }} <br/>
+	{% endfor %}
+	<button>Save</button>
+</form>

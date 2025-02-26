@@ -1,0 +1,16 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h1>Works</h1>
+
+<ul>
+	{% for work in works %}
+	<li><a href="{{ work.get_absolute_url }}">{{ work.title }}</a></li>
+	{% endfor %}
+	{% if user|has_group:"can_edit" %}
+	<li><a href="/edit_work">Add</a></li>
+	{% endif %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h1>Crimes</h1>
+
+<ul>
+	{% for crime in crimes %}
+	<li><a href="{{ crime.get_absolute_url }}">{{ crime.name }}</a></li>
+	{% endfor %}
+	{% if user|has_group:"can_edit" %}
+	<li><a href="/add_crime">Add</a></li>
+	{% endif %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<h2>Work: <a href="{{ character.work.get_absolute_url }}">{{ character.work.title }}</a></h2>
+<h1>Character: {{ character.name }}</h1>
+<small><a href="/edit_character/{{ character.pk }}">Edit</a></small>
+<small><a href="/delete_character/{{ character.pk }}">Delete</a></small>
+<hr/>
+
+<h2>Description:</h2>
+<p>{{ character.description }}</p>
+
+{% if character.involvements.count > 0 %}
+<h2>Criminal record:</h2>
+<ul>
+	{% for involvement in character.involvements %}
+	<li>
+		<a href="{{ involvement.incident.crime.get_absolute_url }}">{{ involvement.incident.crime.name }}</a>
+		(<a href="{{ involvement.incident.get_absolute_url }}">{{ involvement.incident.name }}</a>)
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

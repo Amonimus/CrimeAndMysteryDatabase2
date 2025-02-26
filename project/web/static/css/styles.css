@@ -1,0 +1,56 @@
+:root {
+	--background: #232b34;
+	--theme-color: #3d97e0;
+}
+
+* {
+	margin: 0;
+	font-family: Courier;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+}
+
+html {
+	background-color: var(--background);
+	height: 100%;
+}
+
+body {
+    min-height: 100%;
+	height: max-content;
+}
+
+#page {
+	display: flex;
+	width: 100%;
+}
+
+#sidebar, #content {
+	border: 2px solid;
+	padding: 8px;
+}
+
+#sidebar {
+	max-width: 20%;
+}
+
+#sidebar ul {
+	list-style: none;
+	padding-inline-start: 0;
+}
+
+#content {
+	flex-grow: 1;
+}
+
+.toggle-password {
+	position: relative;
+	right: 1.75em;
+	cursor: pointer;
+	color: var(--background);
+}
+
+.incident, .incident td {
+	border: 1px solid var(--theme-color);
+	text-align: center;
+}
