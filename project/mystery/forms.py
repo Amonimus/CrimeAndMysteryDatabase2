@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 
 from work.models import Character
 from .models import Incident, PersonOfInterst, Clue
-
+from crime.models import Case
 
 class IncidentForm(forms.ModelForm):
 	name = forms.CharField()
@@ -11,10 +11,13 @@ class IncidentForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		instance: Incident | None = kwargs.get("instance", None)
+		case: Case | None = kwargs.pop("case", None)
 		super().__init__(*args, **kwargs)
 		if instance:
 			self.fields['people_of_interest'].queryset = Character.objects.filter(work=instance.case.work)
 			self.fields['people_of_interest'].initial = Character.objects.filter(personofinterst__incident=instance)
+		elif case:
+			self.fields['people_of_interest'].queryset = Character.objects.filter(work=case.work)
 
 	class Meta:
 		model = Incident
@@ -27,7 +30,7 @@ class IncidentForm(forms.ModelForm):
 		for character in characters:
 			person_of_interest, new = PersonOfInterst.objects.get_or_create(character=character, incident=instance)
 			people_of_interest_ids.append(person_of_interest.id)
-		extras: QuerySet | list[PersonOfInterst] = PersonOfInterst.objects.exclude(id__in=people_of_interest_ids)
+		extras: QuerySet | list[PersonOfInterst] = PersonOfInterst.objects.filter(incident=instance).exclude(id__in=people_of_interest_ids)
 		extras.delete()
 		return instance
 

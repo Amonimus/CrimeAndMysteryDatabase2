@@ -1,0 +1,25 @@
+<table class="incident">
+	<tr>
+		<th colspan="2">
+			<a href="{{ incident.get_absolute_url }}">{{ incident.name }}</a>
+		</th>
+	</tr>
+	<tr>
+		<td rowspan="3" class="incident-image-field">
+			{% if incident.image %}
+			<img class="incident-image" src="{% static incident.image.url %}">{% else %}No Image{% endif %}
+			</td>
+		<td><a href="{{ incident.crime.get_absolute_url }}">{{ incident.crime.name }}</a></td>
+	</tr>
+	<tr>
+		<td>{{ incident.description }}</td>
+	</tr>
+	<tr>
+		<td>
+			People of interest:
+			{% for person_of_interest in incident.people_of_interest.all %}
+			<a href="{{ person_of_interest.character.get_absolute_url }}">{{ person_of_interest.character.name }}</a>,
+			{% endfor %}
+		</td>
+	</tr>
+</table>

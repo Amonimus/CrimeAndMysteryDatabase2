@@ -11,6 +11,7 @@ class Clue(models.Model):
 	case: Case = models.ForeignKey(Case, on_delete=models.CASCADE, related_name='clues')
 	description: str = models.TextField(null=True, blank=True)
 	order: int = models.IntegerField(default=1)
+	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
 		ordering = ["name"]
@@ -32,9 +33,10 @@ class Incident(models.Model):
 	objects: models.Manager = models.Manager()
 	name: str = models.TextField()
 	case: Case = models.ForeignKey(Case, on_delete=models.CASCADE, related_name='incidents')
-	crime: Crime = models.ForeignKey(Crime, on_delete=models.SET_NULL, null=True, blank=True)
+	crime: Crime = models.ForeignKey(Crime, on_delete=models.SET_NULL, null=True, blank=True, related_name='crime_incident')
 	description: str = models.TextField(null=True, blank=True)
 	order: int = models.IntegerField(default=1)
+	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
 		ordering = ["case__name", "order", "name"]
@@ -73,6 +75,7 @@ class PersonOfInterst(models.Model):
 		victim = "victim"
 		suspect = "suspect"
 		culprit = "culprit"
+		accomplice = "accomplice"
 		witness = "witness"
 
 	objects: models.Manager = models.Manager()

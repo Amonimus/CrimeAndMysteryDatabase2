@@ -61,6 +61,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS: list[str] = [
 	os.path.join(BASE_DIR, "web/static/"),
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'web/static/media')
+MEDIA_URL = '/media/'
 TEMPLATES: list[dict] = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',

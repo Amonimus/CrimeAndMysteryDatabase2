@@ -9,6 +9,10 @@
 {% endif %}
 <hr/>
 
+<div class="image-block">
+	{% if case.image %}<img src="{% static case.image.url %}">{% endif %}
+</div>
+
 <h2>Initial Situation:</h2>
 <p>{{ case.description }}</p>
 
@@ -22,20 +26,7 @@
 <h2>Incidents:</h2>
 
 {% for incident in case.incidents.all %}
-<table class="incident">
-	<tr>
-		<th colspan="2">
-			<a href="{{ incident.get_absolute_url }}">{{ incident.name }}</a>
-		</th>
-	</tr>
-	<tr>
-		<td rowspan="2">{% if incident.image %}{{incident.image}}{% else %}No Image{% endif %}</td>
-		<td><a href="{{ incident.crime.get_absolute_url }}">{{ incident.crime.name }}</a></td>
-	</tr>
-	<tr>
-		<td>{{ incident.description }}</td>
-	</tr>
-</table>
+{% include "crime/incident_block.html" %}
 {% endfor %}
 
 {% if user|has_group:"can_edit" %}
@@ -45,7 +36,7 @@
 <h2>Clues:</h2>
 <ul>
 	{% for clue in case.clues.all %}
-	<li><a href="{{ clue.get_absolute_url }}">{{ clue.name }}</a></li>
+	<li><a href="{{ clue.get_absolute_url }}">{{ clue.name }}</a>: <i>{{ clue.description }}</i></li>
 	{% endfor %}
 	{% if user|has_group:"can_edit" %}
 	<li><a href="{% url 'add_clue' case.pk %}">Add</a></li>

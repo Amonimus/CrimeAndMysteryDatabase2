@@ -22,7 +22,7 @@ class EditIncidentView(View):
 		else:
 			if case_id:
 				case: Case = Case.objects.get(id=case_id)
-				form: IncidentForm = IncidentForm()
+				form: IncidentForm = IncidentForm(case=case)
 				form.initial["case"] = case
 			else:
 				form: IncidentForm = IncidentForm()
@@ -32,13 +32,9 @@ class EditIncidentView(View):
 	def post(self, request: HttpRequest, incident_id: int = None, case_id: int = None) -> HttpResponse:
 		if incident_id:
 			incident: Incident = Incident.objects.get(id=incident_id)
-			form: IncidentForm = IncidentForm(request.POST, instance=incident)
+			form: IncidentForm = IncidentForm(request.POST, request.FILES, instance=incident)
 		else:
-			if case_id:
-				case: Case = Case.objects.get(id=case_id)
-				form: IncidentForm = IncidentForm(request.POST)
-			else:
-				form: IncidentForm = IncidentForm(request.POST)
+			form: IncidentForm = IncidentForm(request.POST, request.FILES)
 		if form.is_valid():
 			instance: Case = form.save()
 			return instance.get_view()
@@ -76,12 +72,12 @@ class EditClueView(View):
 		context: dict = {"form": form}
 		return render(request, "mystery/edit_clue.html", context)
 
-	def post(self, request: HttpRequest, incident_id: int = None, case_id: int = None) -> HttpResponse:
-		if incident_id:
-			incident: Incident = Incident.objects.get(id=incident_id)
-			form: ClueForm = ClueForm(request.POST, instance=incident)
+	def post(self, request: HttpRequest, clue_id: int = None, case_id: int = None) -> HttpResponse:
+		if clue_id:
+			clue: Clue = Clue.objects.get(id=clue_id)
+			form: ClueForm = ClueForm(request.POST, request.FILES, instance=clue)
 		else:
-			form: ClueForm = ClueForm(request.POST)
+			form: ClueForm = ClueForm(request.POST, request.FILES)
 		if form.is_valid():
 			instance: Clue = form.save()
 			return instance.case.get_view()

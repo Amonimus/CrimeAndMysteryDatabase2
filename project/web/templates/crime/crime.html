@@ -12,4 +12,10 @@
 
 <p>{{ crime.description }}</p>
 
+<h3>Statictics:</h3>
+<ul>
+	<li><b>Culprits:</b> {{ crime.culprits.count }}</li>
+	<li><b>Victims:</b> {{ crime.victims.count }}</li>
+</ul>
+
 {% endblock %}

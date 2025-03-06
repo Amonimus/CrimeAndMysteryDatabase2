@@ -8,6 +8,10 @@
 <small><a href="/delete_clue/{{ clue.pk }}">Delete</a></small>
 <hr/>
 
+<div class="image-block">
+	{% if clue.image %}<img src="{% static clue.image.url %}">{% endif %}
+</div>
+
 <h2>Description:</h2>
 <p>{{ clue.description }}</p>
 

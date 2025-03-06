@@ -80,9 +80,9 @@ class EditCaseView(View):
 	def post(self, request: HttpRequest, case_id: int = None, work_id: int = None) -> HttpResponse:
 		if case_id:
 			case: Case = Case.objects.get(id=case_id)
-			form: CaseForm = CaseForm(request.POST, instance=case)
+			form: CaseForm = CaseForm(request.POST, request.FILES, instance=case)
 		else:
-			form: CaseForm = CaseForm(request.POST)
+			form: CaseForm = CaseForm(request.POST, request.FILES)
 		if form.is_valid():
 			instance: Case = form.save()
 			return instance.get_view()

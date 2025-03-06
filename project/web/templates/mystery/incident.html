@@ -8,6 +8,12 @@
 <small><a href="/delete_incident/{{ incident.pk }}">Delete</a></small>
 <hr/>
 
+<div class="image-block">
+	{% if incident.image %}<img src="{% static incident.image.url %}">{% endif %}
+</div>
+
+<h1><a href="{{ incident.crime.get_absolute_url }}">{{ incident.crime.name }}</a></h1>
+
 <h2>Description:</h2>
 <p>{{ incident.description }}</p>
 

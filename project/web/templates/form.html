@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	{{ form.non_field_errors }}
 	{% csrf_token %}
 	{% for field in form %}

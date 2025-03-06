@@ -6,6 +6,10 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
+from crime.models import Crime, Case
+from mystery.models import Incident
+from work.models import Work, Character
+
 
 class CustomAuthenticationForm(AuthenticationForm):
 
@@ -58,6 +62,8 @@ class RegistrationView(View):
 		data: dict = request.POST.copy()
 		if data['password'] != data['confirm_password']:
 			raise Exception("Password don't match")
+		if User.objects.filter(username=data['username']).exists():
+			raise Exception("User already exists")
 		user: User = User.objects.create_user(
 			username=data['username'],
 			email=data['email'],
@@ -86,7 +92,19 @@ class UnauthenticatedView(View):
 
 class IndexView(View):
 	def get(self, request: HttpRequest) -> HttpResponse:
-		return render(request, "index.html")
+		works: list[Work] = Work.objects.all()
+		characters: list[Character] = Character.objects.all()
+		incidents: list[Incident] = Incident.objects.all()
+		crimes: list[Crime] = Crime.objects.all()
+		cases: list[Case] = Case.objects.all()
+		context: dict = {
+			'works': works,
+			'characters': characters,
+			'incidents': incidents,
+			'crimes': crimes,
+			'cases': cases,
+		}
+		return render(request, "index.html", context)
 
 
 class ToggleEditingView(View):

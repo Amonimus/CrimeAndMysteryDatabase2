@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import redirect, reverse
 
 
@@ -10,6 +11,7 @@ class Work(models.Model):
 	author: str = models.TextField(null=True, blank=True)
 	release_date: date = models.DateField(null=True, blank=True)
 	description: str = models.TextField(null=True, blank=True)
+	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
 		ordering = ["title"]
@@ -32,6 +34,7 @@ class Character(models.Model):
 	name: str = models.TextField()
 	work: Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name="characters")
 	description: str = models.TextField(null=True, blank=True)
+	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
 		ordering = ["name"]
@@ -49,8 +52,10 @@ class Character(models.Model):
 		return reverse("character", kwargs={"character_id": self.pk})
 
 	@property
-	def involvements(self):
-		from crime.models import Crime
+	def involvements(self) -> list["PersonOfInterst"]:
 		from mystery.models import PersonOfInterst
-		involvements = PersonOfInterst.objects.filter(character=self, reason=PersonOfInterst.InterestReasonChoices.culprit)
+		query: Q = Q(reason=PersonOfInterst.InterestReasonChoices.culprit)
+		query.add(Q(reason=PersonOfInterst.InterestReasonChoices.accomplice), Q.OR)
+		query.add(Q(character=self), Q.AND)
+		involvements: list[PersonOfInterst] = PersonOfInterst.objects.filter(query)
 		return involvements

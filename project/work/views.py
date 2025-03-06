@@ -33,9 +33,9 @@ class EditWorkView(View):
 	def post(self, request: HttpRequest, work_id: int = None) -> HttpResponse:
 		if work_id:
 			work: Work = Work.objects.get(id=work_id)
-			form: WorkForm = WorkForm(request.POST, instance=work)
+			form: WorkForm = WorkForm(request.POST, request.FILES, instance=work)
 		else:
-			form: WorkForm = WorkForm(request.POST)
+			form: WorkForm = WorkForm(request.POST, request.FILES)
 		if form.is_valid():
 			instance: Work = form.save()
 			return instance.get_view()
@@ -74,9 +74,9 @@ class EditCharacterView(View):
 	def post(self, request: HttpRequest, character_id: int = None, work_id: int = None) -> HttpResponse:
 		if character_id:
 			character: Character = Character.objects.get(id=character_id)
-			form: CharacterForm = CharacterForm(request.POST, instance=character)
+			form: CharacterForm = CharacterForm(request.POST, request.FILES, instance=character)
 		else:
-			form: CharacterForm = CharacterForm(request.POST)
+			form: CharacterForm = CharacterForm(request.POST, request.FILES)
 		if form.is_valid():
 			instance: Character = form.save()
 			return instance.work.get_view()

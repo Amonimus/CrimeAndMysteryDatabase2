@@ -54,3 +54,22 @@ body {
 	border: 1px solid var(--theme-color);
 	text-align: center;
 }
+
+.incident-image-field {
+	width: 25%;
+}
+
+.incident-image {
+	width: 100%;
+}
+
+.image-block {
+	display: flex;
+	width: 25%;
+	border: 1px solid var(--theme-color);
+	float: right;
+}
+
+.image-block img {
+	max-width: 100%;
+}

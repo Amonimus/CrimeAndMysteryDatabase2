@@ -18,6 +18,16 @@ class Crime(models.Model):
 	def __str__(self) -> str:
 		return self.name
 
+	def get_absolute_url(self) -> str:
+		return reverse("crime", kwargs={"crime_id": self.pk})
+
+	def culprits(self):
+		from mystery.models import PersonOfInterst
+		return PersonOfInterst.objects.filter(incident__crime=self, reason=PersonOfInterst.InterestReasonChoices.culprit)
+
+	def victims(self):
+		from mystery.models import PersonOfInterst
+		return PersonOfInterst.objects.filter(incident__crime=self, reason=PersonOfInterst.InterestReasonChoices.victim)
 
 class Case(models.Model):
 	objects: models.Manager = models.Manager()
@@ -26,6 +36,7 @@ class Case(models.Model):
 	description: str = models.TextField(null=True, blank=True)
 	resolved: bool = models.BooleanField(default=True)
 	resolution: str = models.TextField(null=True, blank=True)
+	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
 		ordering = ["name"]
