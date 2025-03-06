@@ -12,9 +12,11 @@
 {% endif %}
 <hr/>
 
+{% if work.image %}
 <div class="image-block">
-	{% if work.image %}<img src="{% static work.image.url %}">{% endif %}
+	<img src="{% static work.image.url %}">
 </div>
+{% endif %}
 
 {% if work.description %}{{ work.description }}{% endif %}
 

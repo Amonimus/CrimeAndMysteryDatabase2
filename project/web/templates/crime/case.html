@@ -9,9 +9,11 @@
 {% endif %}
 <hr/>
 
+{% if case.image %}
 <div class="image-block">
-	{% if case.image %}<img src="{% static case.image.url %}">{% endif %}
+	<img src="{% static case.image.url %}">
 </div>
+{% endif %}
 
 <h2>Initial Situation:</h2>
 <p>{{ case.description }}</p>

@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 SECRET_KEY: str = 'django-insecure-l3t3tqv53g(2*7r0dcpb9^3ik241@nzcjj5-9_cbdmy5u!e#&0'
 DEBUG: bool = True
-ALLOWED_HOSTS: list[str] = ['amonimus.pythonanywhere.com']
+ALLOWED_HOSTS: list[str] = ['127.0.0.1', 'amonimus.pythonanywhere.com']
 
 # Application definition
 INSTALLED_APPS: list[str] = [

@@ -8,9 +8,11 @@
 <small><a href="/delete_character/{{ character.pk }}">Delete</a></small>
 <hr/>
 
+{% if character.image %}
 <div class="image-block">
-	{% if character.image %}<img src="{% static character.image.url %}">{% endif %}
+	<img src="{% static character.image.url %}">
 </div>
+{% endif %}
 
 <h2>Description:</h2>
 <p>{{ character.description }}</p>
