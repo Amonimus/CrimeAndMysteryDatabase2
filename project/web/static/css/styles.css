@@ -50,6 +50,10 @@ body {
 	color: var(--background);
 }
 
+.incident {
+	width: 80%;
+}
+
 .incident, .incident td {
 	border: 1px solid var(--theme-color);
 	text-align: center;
