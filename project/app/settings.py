@@ -61,6 +61,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS: list[str] = [
 	os.path.join(BASE_DIR, "web/static/"),
 ]
+STATIC_ROOT = 'web/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'web/static/media')
 MEDIA_URL = '/media/'
 TEMPLATES: list[dict] = [
